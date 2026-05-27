@@ -10,7 +10,6 @@ agent = Agent()
 load_dotenv()
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
 async def find_bearing(prompt: str) -> str:
     """This function takes a text prompt describing the requirements for a bearing and returns a list of bearings that match those requirements from a CSV file.
     The function first extracts the bearing information from the prompt using an LLM, and then searches for bearings in the CSV file that meet the specified criteria.
