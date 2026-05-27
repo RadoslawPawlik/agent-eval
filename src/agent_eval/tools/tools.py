@@ -5,7 +5,7 @@ from pydantic_ai import Agent
 agent = Agent()
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
+
 async def convert_load_to_torque(load: float, gear_diam: float, angle: float, friction_coeff: float) -> str:
     """A Function to convert load to torque in Nm based on the gear diameter, angle of the load, and friction coefficient.
 
@@ -30,7 +30,7 @@ async def convert_load_to_torque(load: float, gear_diam: float, angle: float, fr
     return f"The converted load is equal to {torque} Nm of torque."
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
+
 async def convert_linear_speed_to_rpm(speed_lin: float, gear_diam: float) -> str:
     """A function to convert linear speed to RPM.
 
@@ -50,7 +50,7 @@ async def convert_linear_speed_to_rpm(speed_lin: float, gear_diam: float) -> str
     return f"The converted linear speed is equal to {rpm} RPM."
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
+
 async def calculate_min_power(torque: float, rpm: float) -> str:
     """A function to calculate the minimum power required based on torque and RPM.
 
@@ -69,7 +69,7 @@ async def calculate_min_power(torque: float, rpm: float) -> str:
     return f"The minimal required power of the engine is {min_power} kW."
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
+
 async def calculate_initial_gear_ratio(torque: float, motor_torque: float) -> str:
     """A function to calculate the initial gear ratio based on the required torque and motor torque.
 
@@ -88,7 +88,7 @@ async def calculate_initial_gear_ratio(torque: float, motor_torque: float) -> st
     return f"The initial gear ratio is 1:{gear_ratio}."
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
+
 async def calculate_shaft_stages_amount(gear_ratio: float) -> str:
     """A function to determine the number of shaft stages based on the gear ratio.
 
@@ -113,7 +113,7 @@ async def calculate_shaft_stages_amount(gear_ratio: float) -> str:
     return f"The gear transmission has {shaft_stages} stages."
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
+
 async def calculate_actual_gear_ratio(torque: float, motor_torque: float, shaft_stages: int) -> str:
     """A function to calculate the actual gear ratio considering the efficiency of the gear system.
 
@@ -133,7 +133,7 @@ async def calculate_actual_gear_ratio(torque: float, motor_torque: float, shaft_
     return f"The actual gear ratio of the transmission is 1:{actual_gear_ratio}"
 
 
-@agent.tool_plain(docstring_format="google", require_parameter_descriptions=True)
+
 async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_speed_type: str) -> str:
     """A function to calculate the gear ratio for each stage based on the actual gear ratio and the number of shaft stages.
 
