@@ -20,7 +20,7 @@ async def convert_load_to_torque(load: float, gear_diam: float, angle: float = 0
         torque (float): The resulting torque in Nm.
     """
     torque = tool_functions.convert_load_to_torque(load, gear_diam, angle, friction_coeff)
-    return f"The converted load is equal to {torque} Nm of torque."
+    return f"The converted load is equal to {torque:.2f} Nm of torque."
 
 
 async def convert_linear_speed_to_rpm(speed_lin: float, gear_diam: float) -> str:
@@ -33,7 +33,7 @@ async def convert_linear_speed_to_rpm(speed_lin: float, gear_diam: float) -> str
         rpm (float): The resulting RPM.
     """
     rpm = tool_functions.linear_speed_to_rpm(speed_lin, gear_diam)
-    return f"The converted linear speed is equal to {rpm} RPM."
+    return f"The converted linear speed is equal to {rpm:.2f} RPM."
 
 
 async def calculate_min_power(torque: float, rpm: float) -> str:
@@ -46,7 +46,7 @@ async def calculate_min_power(torque: float, rpm: float) -> str:
         min_power (float): The minimum power in kilowatts.
     """
     min_power = tool_functions.minimal_power(torque, rpm)
-    return f"The minimal required power of the engine is {min_power} kW."
+    return f"The minimal required power of the engine is {min_power:.2f} kW."
 
 
 async def calculate_initial_gear_ratio(torque: float, motor_torque: float) -> str:
@@ -58,7 +58,7 @@ async def calculate_initial_gear_ratio(torque: float, motor_torque: float) -> st
     Returns:
         gear_ratio (float): The initial gear ratio.
     """
-    return f"The initial gear ratio is 1:{torque / motor_torque}."
+    return f"The initial gear ratio is 1:{torque / motor_torque:.2f}."
 
 
 async def calculate_shaft_stages_amount(gear_ratio: float) -> str:
@@ -92,7 +92,7 @@ async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_sp
 
     Args:
         actual_gear_ratio (float): The actual gear ratio considering efficiency.
-        shaft_stages (int): The number of shaft stages in the gear system.
+        shaft_stages (int): The number of shaft stages in the gear transmission.
         gear_speed_type (str): The type of gear speed (e.g., "fast").
     Returns:
         list: A list of gear ratios for each stage, formatted as strings.
@@ -103,7 +103,7 @@ async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_sp
     result = []
     for shaft_stage in range(shaft_stages):
         stage_gear_ratio = stage_gear_ratio_list[shaft_stage]
-        result.append(f"Stage {shaft_stage + 1} gear ratio: 1:{stage_gear_ratio}")
+        result.append(f"Stage {shaft_stage + 1} gear ratio: 1:{stage_gear_ratio:.2f}")
     return "\n".join(result)
 
 
@@ -130,4 +130,4 @@ if __name__ == "__main__":
     #       f"Number of Shaft Stages: {stages}\n"
     #       f"Actual Gear Ratio: {actual_gear_ratio:.2f}\n"
     #       f"Each Stage Gear Ratio: {stage_gear_ratio_list}")
-    asyncio.run(stage_gear_ratios(10, 3, "fast"))
+    print(asyncio.run(stage_gear_ratios(58, 4, "fast")))
