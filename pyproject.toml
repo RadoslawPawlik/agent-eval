@@ -14,10 +14,6 @@ dependencies = [
     "pydantic-settings>=2.14.1",
     "python-frontmatter>=1.1.0",
     "tqdm>=4.67.3",
-    "pandas>=2.0.3",
-    "ipython>=9.14.0",
-    "jupyter>=1.1.1",
-    "notebook>=7.0.0",
 ]
 
 [project.scripts]
