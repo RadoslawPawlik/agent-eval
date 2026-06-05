@@ -1,5 +1,5 @@
 from agent_eval.tools.bearing_extraction import find_bearing
-from agent_eval.tools.engine_extraction_copy import find_engine
+from agent_eval.tools.engine_extraction import find_engine
 from agent_eval.tools.tools import (
     calculate_actual_gear_ratio,
     calculate_initial_gear_ratio,
