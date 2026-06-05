@@ -1,8 +1,9 @@
+import math
+
 from pydantic_ai import Agent
-
 import agent_eval.functions.tools as tool_functions
-
 agent = Agent()
+
 
 
 async def convert_load_to_torque(load: float, gear_diam: float, angle: float = 0, friction_coeff: float = 0.1) -> str:
@@ -21,6 +22,7 @@ async def convert_load_to_torque(load: float, gear_diam: float, angle: float = 0
     return f"The converted load is equal to {torque} Nm of torque."
 
 
+
 async def convert_linear_speed_to_rpm(speed_lin: float, gear_diam: float) -> str:
     """A function to convert linear speed to RPM.
 
@@ -32,6 +34,7 @@ async def convert_linear_speed_to_rpm(speed_lin: float, gear_diam: float) -> str
     """
     rpm = tool_functions.linear_speed_to_rpm(speed_lin, gear_diam)
     return f"The converted linear speed is equal to {rpm} RPM."
+
 
 
 async def calculate_min_power(torque: float, rpm: float) -> str:
@@ -47,6 +50,7 @@ async def calculate_min_power(torque: float, rpm: float) -> str:
     return f"The minimal required power of the engine is {min_power} kW."
 
 
+
 async def calculate_initial_gear_ratio(torque: float, motor_torque: float) -> str:
     """A function to calculate the initial gear ratio based on the required torque and motor torque.
 
@@ -57,6 +61,7 @@ async def calculate_initial_gear_ratio(torque: float, motor_torque: float) -> st
         gear_ratio (float): The initial gear ratio.
     """
     return f"The initial gear ratio is 1:{torque / motor_torque}."
+
 
 
 async def calculate_shaft_stages_amount(gear_ratio: float) -> str:
@@ -84,6 +89,7 @@ async def calculate_actual_gear_ratio(torque: float, motor_torque: float, shaft_
     return f"The actual gear ratio of the transmission is 1:{torque / (motor_torque * (0.98**shaft_stages))}"
 
 
+
 async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_speed_type: str) -> str:
     """A function to calculate the gear ratio for each stage based on the actual gear ratio and the number of shaft stages.
 
@@ -93,8 +99,6 @@ async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_sp
         gear_speed_type (str): The type of gear speed (e.g., "fast").
     Returns:
         list: A list of gear ratios for each stage, formatted as strings.
-
-    If the gear speed type is not defined, assume "fast" as the default type.
     """
     stage_gear_ratio_list = tool_functions.stage_gear_ratios(actual_gear_ratio, shaft_stages, gear_speed_type)
     return f"The gear ratios for each stage are: {stage_gear_ratio_list}"
@@ -108,19 +112,18 @@ async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_sp
 #     friction_coeff = 0.1
 #     motor_torque = 0.88  # Nm
 #     speed_lin = 0.125  # m/s
-#     gear_speed_type = "slow"    #przekładnia szybkobieżna (fast) lub wolnobieżna (slow)
+#     gear_speed_type = "fast"    #przekładnia szybkobieżna (fast) lub wolnobieżna (slow)
 
-#     # torque = convert_load_to_torque(load, gear_diam, angle, friction_coeff)
-#     # rpm = convert_linear_speed_to_rpm(speed_lin, gear_diam)
-#     # min_power = calculate_min_power(torque, rpm)
-#     # gear_ratio = calculate_initial_gear_ratio(torque, motor_torque)
-#     # stages = calculate_shaft_stages_amount(gear_ratio)
-#     # actual_gear_ratio = calculate_actual_gear_ratio(torque, motor_torque, stages)
-#     # stage_gear_ratio_list = stage_gear_ratios(actual_gear_ratio, stages, gear_speed_type)
-#     # print(f"Torque: {torque:.2f} Nm\n"
-#     #       f"RPM: {rpm:.2f}\n"
-#     #       f"Minimum Power: {min_power:.2f} kW\n"
-#     #       f"Number of Shaft Stages: {stages}\n"
-#     #       f"Actual Gear Ratio: {actual_gear_ratio:.2f}\n"
-#     #       f"Each Stage Gear Ratio: {stage_gear_ratio_list}")
-#     print(stage_gear_ratios(10, 3, "fast"))
+#     torque = convert_load_to_torque(load, gear_diam, angle, friction_coeff)
+#     rpm = convert_linear_speed_to_rpm(speed_lin, gear_diam)
+#     min_power = calculate_min_power(torque, rpm)
+#     gear_ratio = calculate_initial_gear_ratio(torque, motor_torque)
+#     stages = calculate_shaft_stages_amount(gear_ratio)
+#     actual_gear_ratio = calculate_actual_gear_ratio(torque, motor_torque, stages)
+#     stage_gear_ratio_list = stage_gear_ratios(actual_gear_ratio, stages, gear_speed_type)
+#     print(f"Torque: {torque:.2f} Nm\n"
+#           f"RPM: {rpm:.2f}\n"
+#           f"Minimum Power: {min_power:.2f} kW\n"
+#           f"Number of Shaft Stages: {stages}\n"
+#           f"Actual Gear Ratio: {actual_gear_ratio:.2f}\n"
+#           f"Each Stage Gear Ratio: {stage_gear_ratio_list}")
