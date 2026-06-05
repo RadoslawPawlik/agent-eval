@@ -88,7 +88,7 @@ async def calculate_actual_gear_ratio(output_torque: float, motor_torque: float,
 
 
 async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_speed_type: str) -> str:
-    """A function to calculate the gear ratio for each stage based on the actual gear ratio of the whole gear transmission and the number of shaft stages.
+    """A function to calculate the gear ratio for each stage based on the actual gear ratio and the number of shaft stages.
 
     Args:
         actual_gear_ratio (float): The actual gear ratio considering efficiency.
@@ -103,7 +103,7 @@ async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_sp
     result = []
     for shaft_stage in range(shaft_stages):
         stage_gear_ratio = stage_gear_ratio_list[shaft_stage]
-        result.append(f"Stage {shaft_stage + 1} gear ratio: 1:{stage_gear_ratio}")
+        result.append(f"Stage {shaft_stage + 1} gear ratio: 1:{stage_gear_ratio:.2f}")
     return "\n".join(result)
 
 
