@@ -49,7 +49,7 @@ def calculate_actual_gear_ratio(output_torque: float, motor_torque: float, shaft
     return output_torque / (motor_torque * (0.98**shaft_stages))
 
 
-def stage_gear_ratios(actual_gear_ratio, shaft_stages, gear_speed_type="fast") -> list:
+def stage_gear_ratios(actual_gear_ratio: float, shaft_stages, gear_speed_type="fast") -> list:
     STAGES_REFERENCE = [1, 1.25, 1.6, 2, 2.5, 3.15, 4, 5]
     stage_gear_ratio_list = []
 
@@ -89,7 +89,9 @@ if __name__ == "__main__":
     print(f"21-24: power is {minimal_power(40, 1000)}")
     print(f"25-28: there are {shaft_stages_amount(10)} stages")
     print(f"29-32: there are {shaft_stages_amount(67)} stages")
+
     print(f"33-36: actual gear ratio is 1:{calculate_actual_gear_ratio(50, 0.88, 3)}")
     print(f"37-40: actual gear ratio is 1:{calculate_actual_gear_ratio(200, 1.5, 4)}")
     print(f"41-44: stage gear ratios are {stage_gear_ratios(47, 3)}")
+    print(f"stage amount for 1:97 is {shaft_stages_amount(97)}")
     print(f"45-48: stage gear ratios are {stage_gear_ratios(97, 4, 'slow')}")
