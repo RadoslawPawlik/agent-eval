@@ -22,11 +22,17 @@ def shaft_stages_amount(gear_ratio: float) -> int:
     if gear_ratio <= 5:
         shaft_stages = 1
         return shaft_stages
-    elif gear_ratio <= 20:
+    elif gear_ratio <= 20:  # 5*4
         shaft_stages = 2
         return shaft_stages
-    else:
+    elif gear_ratio <= 63:  # 5*4*3.15, look stages reference in stage_gear_ratios function
         shaft_stages = 3
+        return shaft_stages
+    elif gear_ratio <= 157.5:  # 5*4*3.15*2.5
+        shaft_stages = 4
+        return shaft_stages
+    else:
+        shaft_stages = 5
         return shaft_stages
 
 
