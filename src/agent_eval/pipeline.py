@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def prepare(tasks_yaml: str | Path) -> Path:
     tasks_yaml = Path(tasks_yaml)
-    with open(tasks_yaml) as f:
+    with open(tasks_yaml, encoding="utf-8") as f:
         cfg: dict = yaml.safe_load(f)
 
     input_path = config.input_path / (tasks_yaml.stem + ".jsonl")
@@ -29,7 +29,7 @@ def prepare(tasks_yaml: str | Path) -> Path:
         "model_settings": cfg.get("model_settings") or {},
     }
 
-    with open(input_path, "w") as f:
+    with open(input_path, "w", encoding="utf-8", errors="replace") as f:
         for task in cfg["tasks"]:
             user_message = task["user_message"]
             image = task.get("image")
@@ -57,20 +57,20 @@ async def run_eval(agent: Agent, input_jsonl: str | Path, output_jsonl: str | Pa
 
     completed: set[str] = set()
     if output_path.exists():
-        with open(output_path) as f:
+        with open(output_path, encoding="utf-8", errors="replace") as f:
             for line in f:
                 row = OutputRow.model_validate_json(line)
                 if row.error is None:
                     completed.add(row.id)
 
-    with open(input_path) as f:
+    with open(input_path, encoding="utf-8", errors="replace") as f:
         rows = [InputRow.model_validate_json(line) for line in f]
 
     succeeded = failed = 0
     pending = [row for row in rows if row.id not in completed]
     logger.info("Running %s: %d rows (%d already done)", input_path.stem, len(pending), len(completed))
 
-    with open(output_path, "a") as f:
+    with open(output_path, "a", encoding="utf-8", errors="replace") as f:
         for row in tqdm(pending, desc=output_path.stem, unit="row"):
             try:
                 result = await run_agent(
