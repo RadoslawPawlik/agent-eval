@@ -51,7 +51,7 @@ tasks:
       "Calculate the required motor power for a torque of 40000 Nmm and speed of 1000 rpm."
     image: null
     metadata:
-      category: calculation
+      category: unit_conversion
       expected_tool: calculate_min_power
 
   - user_message: >
@@ -69,40 +69,40 @@ tasks:
       expected_tool: calculate_shaft_stages_amount
 
   - user_message: >
-      „Calculate the actual gear ratio for a three-stage gear transmission driven by a motor with a rated torque of 0.88 Nm and an output torque of 50 Nm”
+      "I need to find the gear ratio of a two-stage gear transmission with torque of 67.69 Nm and a motor torque of 8.49 Nm"
     image: null
     metadata:
       category: calculation
       expected_tool: calculate_actual_gear_ratio
 
   - user_message: >
-      "Find the actual gear ratio of a four-stage gear transmission driven by a motor with a rated torque of 1.5 Nm and an output torque of 200 Nm"
+      "Find the gear ratio of a four-stage gear transmission driven by a motor with a rated torque of 1.5 Nm and an output torque of 200 Nm"
     image: null
     metadata:
       category: calculation
       expected_tool: calculate_actual_gear_ratio
 
   - user_message: >
-      „Calculate the stage gear ratios for a three-stage gear transmission with a total gear ratio of 1:47”
+      „Calculate the gear ratios of every stage for a three-stage gear transmission with a total gear ratio of 1:47”
     image: null
     metadata:
       category: calculation
       expected_tool: stage_gear_ratios
 
   - user_message: >
-      „What is the gear ratio on the second stage of a four-stage mechanical gear transmission with a total gear ratio of 1:97?”
+      „What is the gear ratio on every stage of a mechanical gear transmission with a gear ratio of 1:97?”
     image: null
     metadata:
-      category: calculation
+      category: calculation, multiple_tools
       expected_tool: stage_gear_ratios
   - user_message: >
-      "Find a bearing with an inner diameter of at least 20 mm, a dynamic load rating of at least 20 kN, and a static load rating of at least 10 kN."
+      "Find a bearing with an inner diameter of at least 30 mm, a dynamic load rating of at least 20 kN, and a static load rating of at least 10 kN."
     image: null
     metadata:
       category: information_retrieval
       expected_tool: find_bearing
   - user_message: >
-      "I am looking for a bearing to support a mechanical gear transmission spinning in a stair lift. Which bearing would you recommend and why?"
+      "I need a bearing that can support a radial load of 15 kN and an axial load of 5 kN, with an inner diameter of 25 mm. Can you find one for me?"
     image: null
     metadata:
       category: curveball
@@ -114,8 +114,8 @@ tasks:
       category: information_retrieval
       expected_tool: find_engine
   - user_message: >
-      "I need an engine to power a small electric vehicle with a top speed of 50 km/h and weight of 150 kg. Which engine would you recommend and why?"
+      "I need an engine that supports a load of 100 kg for moving a gear with a diameter of 0.1 m at a speed of 1 m/s. Can you find one for me?"
     image: null
     metadata:
-      category: curveball
+      category: unit_conversion, information_retrieval, multiple_tools
       expected_tool: find_engine
