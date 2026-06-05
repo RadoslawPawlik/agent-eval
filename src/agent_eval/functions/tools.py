@@ -81,17 +81,17 @@ def stage_gear_ratios(actual_gear_ratio: float, shaft_stages, gear_speed_type="f
 
 
 if __name__ == "__main__":
-    print(f"1-4: torque is {convert_load_to_torque(150, 200, 30, 0.15)}")
-    print(f"5-8: torque is {convert_load_to_torque(500, 120, 45, 0.2)}")
-    print(f"9-12: rpm is {linear_speed_to_rpm(2, 80)}")
-    print(f"13-16: rpm is {linear_speed_to_rpm(1, 100)}")
-    print(f"17-20: power is {minimal_power(350, 2500)}")
-    print(f"21-24: power is {minimal_power(40, 1000)}")
+    print(f"1-4: torque is {convert_load_to_torque(150, 200, 30, 0.15):.2f} Nm")
+    print(f"5-8: torque is {convert_load_to_torque(500, 120, 45, 0.2):.2f} Nm")
+    print(f"9-12: rpm is {linear_speed_to_rpm(2, 80):.2f} RPM")
+    print(f"13-16: rpm is {linear_speed_to_rpm(1, 100):.2f} RPM")
+    print(f"17-20: power is {minimal_power(350, 2500):.2f} kW")
+    print(f"21-24: power is {minimal_power(40, 1000):.2f} kW")
     print(f"25-28: there are {shaft_stages_amount(10)} stages")
     print(f"29-32: there are {shaft_stages_amount(67)} stages")
 
-    print(f"33-36: actual gear ratio is 1:{calculate_actual_gear_ratio(50, 0.88, 3)}")
-    print(f"37-40: actual gear ratio is 1:{calculate_actual_gear_ratio(200, 1.5, 4)}")
+    print(f"33-36: actual gear ratio is 1:{calculate_actual_gear_ratio(67.69, 8.49, 2):.2f}")
+    print(f"37-40: actual gear ratio is 1:{calculate_actual_gear_ratio(200, 1.5, 4):.2f}")
     print(f"41-44: stage gear ratios are {stage_gear_ratios(47, 3)}")
     print(f"stage amount for 1:97 is {shaft_stages_amount(97)}")
     print(f"45-48: stage gear ratios are {stage_gear_ratios(97, 4, 'slow')}")
