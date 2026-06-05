@@ -1,0 +1,121 @@
+# Number of repetitions per task (for evaluation of repeatability)
+n: 4
+
+# Model configuration
+provider: together
+model: openai/gpt-oss-120b
+model_settings:
+  temperature: 0.1
+  max_tokens: 8192
+
+tasks:
+  # Each task is a single scenario sent to the agent.
+  # user_message: the user message sent to the agent
+  # image: path to an image file, or null. Starting with the data/...
+  # metadata: yours — use it however you like for analysis (category, expected output, tags, etc.)
+
+  - user_message: "Calculate the required torque in Nm for a load of 150 kg, using a gear with a diameter of 0.2 m, on a plane with an inclination angle of 30 degrees and a friction coefficient of 0.15."
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: convert_load_to_torque
+
+  - user_message: "What is the required torque on the gear shaft for lifting a mass of 500 kg at a 45-degree angle? The gear diameter is 120 mm, and the friction coefficient is 0.2."
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: convert_load_to_torque
+
+  - user_message: >
+      "Calculate the rotational speed in rpm for a gear with a diameter of 80 mm, if its linear speed is 2 m/s."
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: convert_linear_speed_to_rpm
+
+  - user_message: >
+      "I need the rpm of a gear with a diameter of 0.1 m, if its linear speed is 1 m/s. Can you calculate it for me?"
+    image: null
+    metadata:
+      category: unit_conversion
+      expected_tool: convert_linear_speed_to_rpm
+
+  - user_message: >
+      "Calculate the minimum required motor power for a torque of 350 Nm at 2500 rpm."
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: calculate_min_power
+
+  - user_message: >
+      "Calculate the required motor power for a torque of 40000 Nmm and speed of 1000 rpm."
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: calculate_min_power
+
+  - user_message: >
+      „How many stages should a mechanical gear transmission have with a gear ratio of 1:10?”
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: calculate_shaft_stages_amount
+
+  - user_message: >
+      „How many stages should a mechanical gear transmission have with a gear ratio of 1:67?”
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: calculate_shaft_stages_amount
+
+  - user_message: >
+      „Calculate the actual gear ratio for a three-stage gear transmission driven by a motor with a rated torque of 0.88 Nm and an output torque of 50 Nm”
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: calculate_actual_gear_ratio
+
+  - user_message: >
+      "Find the actual gear ratio of a four-stage gear transmission driven by a motor with a rated torque of 1.5 Nm and an output torque of 200 Nm"
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: calculate_actual_gear_ratio
+
+  - user_message: >
+      „Calculate the stage gear ratios for a three-stage gear transmission with a total gear ratio of 1:47”
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: stage_gear_ratios
+
+  - user_message: >
+      „What is the gear ratio on the second stage of a four-stage mechanical gear transmission with a total gear ratio of 1:97?”
+    image: null
+    metadata:
+      category: calculation
+      expected_tool: stage_gear_ratios
+  - user_message: >
+      "Find a bearing with an inner diameter of at least 20 mm, a dynamic load rating of at least 20 kN, and a static load rating of at least 10 kN."
+    image: null
+    metadata:
+      category: information_retrieval
+      expected_tool: find_bearing
+  - user_message: >
+      "I am looking for a bearing to support a mechanical gear transmission spinning in a stair lift. Which bearing would you recommend and why?"
+    image: null
+    metadata:
+      category: curveball
+      expected_tool: find_bearing
+  - user_message: >
+      "I am looking for an engine with a power of at least 100 kW, a minimum speed of 2000 RPM, and a mass of up to 200 kg."
+    image: null
+    metadata:
+      category: information_retrieval
+      expected_tool: find_engine
+  - user_message: >
+      "I need an engine to power a small electric vehicle with a top speed of 50 km/h and weight of 150 kg. Which engine would you recommend and why?"
+    image: null
+    metadata:
+      category: curveball
+      expected_tool: find_engine
