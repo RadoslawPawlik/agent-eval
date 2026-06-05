@@ -30,17 +30,17 @@ def shaft_stages_amount(gear_ratio: float) -> int:
         return shaft_stages
 
 
-def calculate_actual_gear_ratio(torque: float, motor_torque: float, shaft_stages: int) -> float:
+def calculate_actual_gear_ratio(output_torque: float, motor_torque: float, shaft_stages: int) -> float:
     """A function to calculate the actual gear ratio considering the efficiency of the gear system.
 
     Args:
-        torque (float): The required torque in Nm.
+        output_torque (float): The output torque in Nm.
         motor_torque (float): The torque provided by the motor in Nm.
         shaft_stages (int): The number of shaft stages in the gear system.
     Returns:
         actual_gear_ratio (float): The actual gear ratio considering efficiency.
     """
-    return torque / (motor_torque * (0.98**shaft_stages))
+    return output_torque / (motor_torque * (0.98**shaft_stages))
 
 
 def stage_gear_ratios(actual_gear_ratio, shaft_stages, gear_speed_type="fast") -> list:
