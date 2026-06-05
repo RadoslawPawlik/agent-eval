@@ -1,3 +1,5 @@
+import asyncio
+
 from pydantic_ai import Agent
 
 import agent_eval.functions.tools as tool_functions
@@ -71,17 +73,18 @@ async def calculate_shaft_stages_amount(gear_ratio: float) -> str:
     return f"The gear transmission has {shaft_stages} stages."
 
 
-async def calculate_actual_gear_ratio(torque: float, motor_torque: float, shaft_stages: int) -> str:
+async def calculate_actual_gear_ratio(output_torque: float, motor_torque: float, shaft_stages: int) -> str:
     """A function to calculate the actual gear ratio considering the efficiency of the gear system.
 
     Args:
-        torque (float): The required torque in Nm.
+        output_torque (float): The output torque in Nm.
         motor_torque (float): The torque provided by the motor in Nm.
         shaft_stages (int): The number of shaft stages in the gear system.
     Returns:
         actual_gear_ratio (float): The actual gear ratio considering efficiency.
     """
-    return f"The actual gear ratio of the transmission is 1:{torque / (motor_torque * (0.98**shaft_stages))}"
+    actual_gear_ratio = tool_functions.calculate_actual_gear_ratio(output_torque, motor_torque, shaft_stages)
+    return f"The actual gear ratio of the transmission is 1:{actual_gear_ratio:.2f}."
 
 
 async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_speed_type: str) -> str:
@@ -97,30 +100,34 @@ async def stage_gear_ratios(actual_gear_ratio: float, shaft_stages: int, gear_sp
     If the gear speed type is not defined, assume "fast" as the default type.
     """
     stage_gear_ratio_list = tool_functions.stage_gear_ratios(actual_gear_ratio, shaft_stages, gear_speed_type)
-    return f"The gear ratios for each stage are: {stage_gear_ratio_list}"
+    result = []
+    for shaft_stage in range(shaft_stages):
+        stage_gear_ratio = stage_gear_ratio_list[shaft_stage]
+        result.append(f"Stage {shaft_stage + 1} gear ratio: 1:{stage_gear_ratio}")
+    return "\n".join(result)
 
 
-# if __name__ == "__main__":
-#     # example usage
-#     load = 300  # kg
-#     gear_diam = 52  # mm
-#     angle = 25 # degrees
-#     friction_coeff = 0.1
-#     motor_torque = 0.88  # Nm
-#     speed_lin = 0.125  # m/s
-#     gear_speed_type = "slow"    #przekładnia szybkobieżna (fast) lub wolnobieżna (slow)
+if __name__ == "__main__":
+    # example usage
+    load = 300  # kg
+    gear_diam = 52  # mm
+    angle = 25  # degrees
+    friction_coeff = 0.1
+    motor_torque = 0.88  # Nm
+    speed_lin = 0.125  # m/s
+    gear_speed_type = "slow"  # przekładnia szybkobieżna (fast) lub wolnobieżna (slow)
 
-#     # torque = convert_load_to_torque(load, gear_diam, angle, friction_coeff)
-#     # rpm = convert_linear_speed_to_rpm(speed_lin, gear_diam)
-#     # min_power = calculate_min_power(torque, rpm)
-#     # gear_ratio = calculate_initial_gear_ratio(torque, motor_torque)
-#     # stages = calculate_shaft_stages_amount(gear_ratio)
-#     # actual_gear_ratio = calculate_actual_gear_ratio(torque, motor_torque, stages)
-#     # stage_gear_ratio_list = stage_gear_ratios(actual_gear_ratio, stages, gear_speed_type)
-#     # print(f"Torque: {torque:.2f} Nm\n"
-#     #       f"RPM: {rpm:.2f}\n"
-#     #       f"Minimum Power: {min_power:.2f} kW\n"
-#     #       f"Number of Shaft Stages: {stages}\n"
-#     #       f"Actual Gear Ratio: {actual_gear_ratio:.2f}\n"
-#     #       f"Each Stage Gear Ratio: {stage_gear_ratio_list}")
-#     print(stage_gear_ratios(10, 3, "fast"))
+    # torque = convert_load_to_torque(load, gear_diam, angle, friction_coeff)
+    # rpm = convert_linear_speed_to_rpm(speed_lin, gear_diam)
+    # min_power = calculate_min_power(torque, rpm)
+    # gear_ratio = calculate_initial_gear_ratio(torque, motor_torque)
+    # stages = calculate_shaft_stages_amount(gear_ratio)
+    # actual_gear_ratio = calculate_actual_gear_ratio(torque, motor_torque, stages)
+    # stage_gear_ratio_list = stage_gear_ratios(actual_gear_ratio, stages, gear_speed_type)
+    # print(f"Torque: {torque:.2f} Nm\n"
+    #       f"RPM: {rpm:.2f}\n"
+    #       f"Minimum Power: {min_power:.2f} kW\n"
+    #       f"Number of Shaft Stages: {stages}\n"
+    #       f"Actual Gear Ratio: {actual_gear_ratio:.2f}\n"
+    #       f"Each Stage Gear Ratio: {stage_gear_ratio_list}")
+    asyncio.run(stage_gear_ratios(10, 3, "fast"))
